@@ -1,0 +1,38 @@
+// Top-level build.gradle file using Groovy DSL
+// Supports Firebase and custom build folder logic
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.google.gms:google-services:4.4.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+gradle.projectsEvaluated {
+    def newBuildDir = new File(rootProject.projectDir, '../build')
+    rootProject.buildDir = newBuildDir
+
+    subprojects.each { subproject ->
+        def subBuildDir = new File(newBuildDir, subproject.name)
+        subproject.buildDir = subBuildDir
+    }
+}
+
+subprojects {
+    evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
+}

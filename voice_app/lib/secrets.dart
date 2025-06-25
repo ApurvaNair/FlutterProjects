@@ -1,0 +1,2 @@
+const API =
+    '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';
