@@ -21,28 +21,38 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  /// Returns `true` if login succeeded, `false` otherwise
+  Future<bool> login(String email, String password) async {
     try {
       isLoading = true;
       error = null;
       notifyListeners();
+
       await _firebaseService.login(email, password);
+
+      return true;
     } catch (e, stack) {
       _handleError(e, stack);
+      return false;
     } finally {
       isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<void> signUp(String email, String password) async {
+  /// Returns `true` if sign-up succeeded, `false` otherwise
+  Future<bool> signUp(String email, String password) async {
     try {
       isLoading = true;
       error = null;
       notifyListeners();
+
       await _firebaseService.signUp(email, password);
+
+      return true;
     } catch (e, stack) {
       _handleError(e, stack);
+      return false;
     } finally {
       isLoading = false;
       notifyListeners();

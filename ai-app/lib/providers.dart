@@ -28,7 +28,6 @@ final visionViewModelProvider = ChangeNotifierProvider(
   (ref) => VisionViewModel(),
 );
 
-// 🔁 NEW: Auth state stream used by GoRouter
 final authStateProvider = StreamProvider<User?>(
   (ref) => FirebaseAuth.instance.authStateChanges(),
 );
